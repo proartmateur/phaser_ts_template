@@ -14,6 +14,6 @@ export default class Nivel1 extends Phaser.Scene
 
     create ()
     {
-        const logo = this.add.image(400, 70, 'logo');
+        const logo = this.add.image(400, 270, 'logo');
     }
 }

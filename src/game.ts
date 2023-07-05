@@ -1,8 +1,8 @@
 import * as Phaser from 'phaser';
-import {config, GameConfig} from "./config";
+import {config} from "./config";
 
 class Game extends Phaser.Game {
-    constructor(configuration: GameConfig) {
+    constructor(configuration: Phaser.Types.Core.GameConfig) {
         super(configuration);
     }
 }
