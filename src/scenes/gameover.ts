@@ -22,11 +22,11 @@ export default class GameOver extends Phaser.Scene{
 
     create() {
         const gameOverTxt = this.add.text(
-            this.width / 2 - (Math.round((currentLanguage.gameOver.title.length * 32) / 2)),
+            this.width / 2 - (Math.round((currentLanguage.gameOver.title.length * 72) / 2)),
             this.height / 2,
             currentLanguage.gameOver.title,
             {
-                fontSize: '32px',
+                fontSize: '72px',
                 color: currentPalette.secondary.hex,
                 align: 'center'
             }
