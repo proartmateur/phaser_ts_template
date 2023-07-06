@@ -1,7 +1,7 @@
 import {levelSceneData} from "../Shared/types";
 import * as Phaser from "phaser";
 import {currentPalette} from "../Shared/colorPalettes/currentPalette";
-import {SceneName} from "../Shared/constants";
+import {EventName, SceneName} from "../Shared/constants";
 
 export default class HUD extends Phaser.Scene {
     private width: number;
@@ -28,7 +28,8 @@ export default class HUD extends Phaser.Scene {
 
     create() {
         const currentLevel: Phaser.Scene = this.scene.get(this.currentScene);
-        currentLevel.events.on('onDead', this.updateVidas, this);
+
+        // region Draw components
         this.vidasTxt = this.add.text(
             10,
             10,
@@ -50,8 +51,12 @@ export default class HUD extends Phaser.Scene {
                 align: 'center'
             }
         )
+        // endregion
 
-        currentLevel.events.on('onWinPoints', this.updateScore, this)
+        // region Event Subscriptions
+        currentLevel.events.on(EventName.ON_WIN_POINTS, this.updateScore, this)
+        currentLevel.events.on(EventName.ON_DEAD, this.updateVidas, this);
+        // endregion
     }
 
     updateVidas(): void {
