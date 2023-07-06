@@ -119,7 +119,8 @@ export const LabelComponent = (props: LabelComponentProps): LabelComponentAction
             {
                 fontSize: `${props.fontSizePx}px`,
                 color: props.color || currentPalette.white.hex,
-                align: 'center'
+                align: 'center',
+                fontFamily: 'Abaddon-Light'
             })
 
         if (props.onClick !== null) {

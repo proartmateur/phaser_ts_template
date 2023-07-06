@@ -1,6 +1,7 @@
 import * as Phaser from 'phaser';
 import {SceneName, ImageName, MapName, BackgroundName} from '../Shared/constants';
 import {currentPalette} from "../Shared/colorPalettes/currentPalette";
+import {FontName} from "../Shared/constants/fonts";
 
 export default class Loading extends Phaser.Scene {
     //Barras de Carga
@@ -37,6 +38,11 @@ export default class Loading extends Phaser.Scene {
         this.load.on(
             'complete',
             function () {
+                const fuenteJSON = this.cache.json.get(FontName.PixelMayus.JSON)
+                this.cache.bitmapFont.add(
+                    FontName.PixelMayus.BITMAP,
+                    Phaser.GameObjects.RetroFont.Parse(this, fuenteJSON)
+                )
                 this.scene.start(SceneName.MENU);
             },
             this
@@ -53,6 +59,10 @@ export default class Loading extends Phaser.Scene {
 
         // Fondos
         this.load.image(BackgroundName.BROWN, 'assets/imagenes/fondos/Brown.png')
+
+        // Fuentes
+        this.load.json(FontName.PixelMayus.JSON, 'assets/fuentes/fuente.json')
+        this.load.image(FontName.PixelMayus.IMAGEN, 'assets/fuentes/imagenFuente.png')
     }
 
     /**

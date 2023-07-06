@@ -4,6 +4,7 @@ import {ImageName} from "../Shared/constants";
 import {currentPalette} from "../Shared/colorPalettes/currentPalette";
 import {currentLanguage} from "../Shared/constants/texts";
 import {levelSceneData} from "../Shared/types";
+import {FontName} from "../Shared/constants/fonts";
 
 
 export default class Menu extends Phaser.Scene {
@@ -33,22 +34,20 @@ export default class Menu extends Phaser.Scene {
 
         const logo = this.add.image(this.width / 2, 70, ImageName.LOGO);
 
-        const jugarTxt: Phaser.GameObjects.Text = this.add.text(
+        const jugarTxt: Phaser.GameObjects.BitmapText = this.add.bitmapText(
             this.width / 2 - Math.floor((
                 32 * currentLanguage.menu.playBtn.length) / 2
             ),
             this.height / 2,
+            FontName.PixelMayus.BITMAP,
             currentLanguage.menu.playBtn,
-            {
-                fontSize: '32px',
-                color: currentPalette.white.hex,
-                align: 'center'
-            }).setInteractive()
+            32
+            ).setInteractive()
 
         this.cambiarEscena(jugarTxt, SceneName.LEVEL1)
     }
 
-    private cambiarEscena(button: Phaser.GameObjects.Text, scene: string) {
+    private cambiarEscena(button: Phaser.GameObjects.BitmapText, scene: string) {
         button.on('pointerdown', () => {
             this.scene.start(scene, this.newGameState);
             this.scene.start(SceneName.HUD, this.newGameState);

@@ -77,7 +77,7 @@ export default class Nivel1 extends Phaser.Scene {
 
         this.deadBtn = LabelComponent({
             position: LabelComponentPositions.CENTER_LEFT,
-            text: 'MORIR',
+            text: 'Morir',
             fontSizePx: 24,
             context: this,
             onClick: (button: Phaser.GameObjects.Text) => {
