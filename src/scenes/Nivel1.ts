@@ -9,6 +9,7 @@ export default class Nivel1 extends Phaser.Scene {
     private width: number;
     private height: number;
     private vidas: number;
+    private score: number;
 
     constructor() {
         super(SceneName.LEVEL1);
@@ -18,6 +19,7 @@ export default class Nivel1 extends Phaser.Scene {
         this.width = this.cameras.main.width;
         this.height = this.cameras.main.height;
         this.vidas = data.lives;
+        this.score = data.score;
     }
 
     preload() {
@@ -42,22 +44,40 @@ export default class Nivel1 extends Phaser.Scene {
         this.cambiarEscena(jugarTxt, SceneName.MENU)
 
         const vidasTxt: Phaser.GameObjects.Text = this.add.text(
-            (this.width / 2) + 50,
+            (this.width / 2) - 100,
             this.height / 2 + 150,
-            'Vidas:' + String(this.vidas),
+            'Morir',
             {
                 fontSize: '32px',
                 color: currentPalette.white.hex,
                 align: 'center'
             }
         ).setInteractive()
-        console.log('Created')
         this.deadByBtn(vidasTxt);
+
+        const getPoints = this.add.text(
+            this.width - ('Ganar Puntos'.length * 32) -10,
+            this.height / 2 + 150,
+            'Ganar Puntos',
+            {
+                fontSize: '32px',
+                color: currentPalette.white.hex,
+                align: 'center'
+            }
+        ).setInteractive()
+        this.winPoints(getPoints)
     }
 
+    private winPoints(button: Phaser.GameObjects.Text) {
+        button.on('pointerdown', () =>{
+            this.score += 10_000;
+            this.registry.set('score', this.score);
+            this.events.emit('onWinPoints');
+            console.log(`Score: ${this.score}`)
+        })
+    }
     private deadByBtn(button: Phaser.GameObjects.Text) {
         button.on('pointerdown', () => {
-            console.log('Muerto')
             this.vidas -= 1;
             this.registry.set('vidas', this.vidas);
             this.events.emit('onDead');
