@@ -19,6 +19,7 @@ export interface LabelComponentProps {
     x?: number,
     y?: number,
     position?: LabelComponentPositions,
+    color?: string,
     onClick: (button: Phaser.GameObjects.Text) => void | null,
     context: Phaser.Scene
 }
@@ -107,7 +108,7 @@ export const LabelComponent = (props: LabelComponentProps): LabelComponentAction
             props.text,
             {
                 fontSize: `${props.fontSizePx}px`,
-                color: currentPalette.white.hex,
+                color: props.color || currentPalette.white.hex,
                 align: 'center'
             })
 
@@ -122,6 +123,9 @@ export const LabelComponent = (props: LabelComponentProps): LabelComponentAction
         switch (key) {
             case 'text':
                 button.text = newVal
+                break
+            case 'color':
+                button.style.color = newVal
                 break
             case 'position':
                 props.position = newVal

@@ -49,6 +49,7 @@ export default class Nivel1 extends Phaser.Scene {
                 this.cambiarEscena(button, SceneName.MENU)
             },
             fontSizePx: 32,
+            color: currentPalette.secondary.hex,
             context: this
         })
 
@@ -84,6 +85,7 @@ export default class Nivel1 extends Phaser.Scene {
                 this.txtExit.update({
                     text: 'SALIR..7',
                     position: LabelComponentPositions.BOTTOM_RIGHT,
+                    color: currentPalette.black
                 } as unknown as LabelComponentProps)
             }
 
@@ -103,6 +105,7 @@ export default class Nivel1 extends Phaser.Scene {
 
             if (this.score === 4) {
                 this.txtExit.update({
+                    color: currentPalette.white.hex,
                     text: 'SALIR YA!',
                     position: LabelComponentPositions.BOTTOM_CENTER,
                 } as unknown as LabelComponentProps)
