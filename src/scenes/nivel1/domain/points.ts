@@ -1,5 +1,6 @@
-import {LabelComponentPositions} from "../../../components/atoms/LabelComponent";
+
 import {currentPalette} from "../../../Shared/colorPalettes/currentPalette";
+import {LabelComponentPositions} from "../../../components/atoms/LabelComponent/LabelComponent";
 
 export const businessLogicOfPoints = (newScore: number): any => {
         let result = {}

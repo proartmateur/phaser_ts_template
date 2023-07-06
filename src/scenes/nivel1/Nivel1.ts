@@ -1,18 +1,19 @@
 import * as Phaser from 'phaser';
-import {
-    LabelComponent,
-    LabelComponentActions,
-    LabelComponentPositions,
-    LabelComponentProps
-} from "../../components/atoms/LabelComponent";
+
 import {currentPalette} from "../../Shared/colorPalettes/currentPalette";
-import {EventName, ImageName, SceneName} from "../../Shared/constants";
+import {BackgroundName, EventName, ImageName, MapName, SceneName} from "../../Shared/constants";
 import {levelSceneData} from "../../Shared/types";
 import {currentLanguage} from "../../Shared/constants/texts";
 import {businessLogicOfPoints} from "./domain/points";
+import {
+    LabelComponent,
+    LabelComponentActions,
+    LabelComponentPositions, LabelComponentProps
+} from "../../components/atoms/LabelComponent/LabelComponent";
 
 export default class Nivel1 extends Phaser.Scene {
 
+    // region Attributes
     private width: number;
     private height: number;
     private vidas: number;
@@ -22,10 +23,17 @@ export default class Nivel1 extends Phaser.Scene {
     private deadBtn: LabelComponentActions;
     private winPontsBtn: LabelComponentActions;
 
+    private mapaNivel: Phaser.Tilemaps.Tilemap;
+    private conjuntoPatrones: Phaser.Tilemaps.Tileset;
+    private capaMapaNivel: Phaser.Tilemaps.TilemapLayer;
+    // endregion
+    private imagenFondo: Phaser.GameObjects.TileSprite;
+
     constructor() {
         super(SceneName.LEVEL1);
     }
 
+    // region Phaser Hooks
     init(data: levelSceneData) {
         this.width = this.cameras.main.width;
         this.height = this.cameras.main.height;
@@ -39,7 +47,23 @@ export default class Nivel1 extends Phaser.Scene {
 
     create() {
         // region Draw Components
-        const logo = this.add.image(400, 270, ImageName.LOGO);
+
+        this.mapaNivel = this.make.tilemap({
+            key: MapName.NIVEL1.TILEMAPJSON,
+            tileWidth: 16,
+            tileHeight: 16
+        })
+        this.conjuntoPatrones = this.mapaNivel.addTilesetImage(MapName.NIVEL1.TILESET)
+        this.capaMapaNivel = this.mapaNivel.createLayer(MapName.NIVEL1.CAPA, this.conjuntoPatrones)
+
+        this.imagenFondo = this.add.tileSprite(
+            0, 0,
+            this.mapaNivel.widthInPixels, this.mapaNivel.heightInPixels,
+            BackgroundName.BROWN
+        )
+            .setOrigin(0, 0)
+            .setDepth(-1)
+
 
         this.txtExit = LabelComponent({
             position: LabelComponentPositions.BOTTOM_CENTER,
@@ -70,9 +94,19 @@ export default class Nivel1 extends Phaser.Scene {
                 this.winPoints(button)
             }
         })
+
+
         // endregion
     }
 
+    update() {
+        // mover fondo
+        this.imagenFondo.tilePositionY -= 0.4
+    }
+
+    // endregion
+
+    // region Level Methods
     private winPoints(button: Phaser.GameObjects.Text) {
         button.on('pointerdown', () => {
             this.score += 1;
@@ -98,4 +132,6 @@ export default class Nivel1 extends Phaser.Scene {
             this.scene.stop(SceneName.HUD);
         });
     }
+
+    // endregion
 }

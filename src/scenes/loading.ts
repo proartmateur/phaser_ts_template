@@ -1,5 +1,5 @@
 import * as Phaser from 'phaser';
-import {SceneName, ImageName} from '../Shared/constants';
+import {SceneName, ImageName, MapName, BackgroundName} from '../Shared/constants';
 import {currentPalette} from "../Shared/colorPalettes/currentPalette";
 
 export default class Loading extends Phaser.Scene {
@@ -44,7 +44,15 @@ export default class Loading extends Phaser.Scene {
 
         //Carga los assets del juego
         this.load.image(ImageName.LOGO, 'assets/phaser3-logo.png');
-        //for (let i = 0; i <= 1000; i++) this.load.image(ImageName.LOGO + i, 'assets/phaser3-logo.png');
+
+
+        // Mapas
+        this.load.tilemapTiledJSON(MapName.NIVEL1.TILEMAPJSON, 'assets/niveles/nivel1.json')
+        this.load.tilemapTiledJSON(MapName.NIVEL2.TILEMAPJSON, 'assets/niveles/level1_map.json')
+        this.load.image(MapName.NIVEL1.TILESET, 'assets/niveles/nivelestileset.png')
+
+        // Fondos
+        this.load.image(BackgroundName.BROWN, 'assets/imagenes/fondos/Brown.png')
     }
 
     /**
