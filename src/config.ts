@@ -1,5 +1,10 @@
 import * as Phaser from 'phaser';
-import Nivel1 from './scenes/Nivel1';
+import Loading from "./scenes/loading";
+import Nivel1 from "./scenes/Nivel1";
+import Menu from "./scenes/menu";
+import HUD from "./scenes/HUD";
+import GameOver from "./scenes/gameover";
+
 
 
 
@@ -8,5 +13,11 @@ export const config: Phaser.Types.Core.GameConfig = {
     backgroundColor: '#000000',
     width: 800,
     height: 600,
-    scene: Nivel1
+    scene: [
+        Loading,
+        Nivel1,
+        Menu,
+        HUD,
+        GameOver
+    ],
 };
