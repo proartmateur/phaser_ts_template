@@ -1,5 +1,5 @@
 import * as Phaser from 'phaser';
-import {SceneName, ImageName, EventName} from '../Shared/constants';
+import {EventName, ImageName, SceneName} from '../Shared/constants';
 import {currentPalette} from "../Shared/colorPalettes/currentPalette";
 import {currentLanguage} from "../Shared/constants/texts";
 import {levelSceneData} from "../Shared/types";
@@ -19,6 +19,8 @@ export default class Nivel1 extends Phaser.Scene {
     private score: number;
 
     private txtExit: LabelComponentActions;
+    private deadBtn: LabelComponentActions;
+    private winPontsBtn: LabelComponentActions;
 
     constructor() {
         super(SceneName.LEVEL1);
@@ -50,32 +52,25 @@ export default class Nivel1 extends Phaser.Scene {
             context: this
         })
 
-        const vidasTxt: Phaser.GameObjects.Text = this.add.text(
-            (this.width / 2) - 100,
-            this.height / 2 + 150,
-            'Morir',
-            {
-                fontSize: '32px',
-                color: currentPalette.white.hex,
-                align: 'center'
+        this.deadBtn = LabelComponent({
+            position: LabelComponentPositions.CENTER_LEFT,
+            text: 'Morir',
+            fontSizePx: 24,
+            context: this,
+            onClick: (button: Phaser.GameObjects.Text) => {
+                this.deadByBtn(button)
             }
-        ).setInteractive()
+        })
 
-        const getPoints = this.add.text(
-            this.width - ('Ganar Puntos'.length * 32) - 10,
-            this.height / 2 + 150,
-            'Ganar Puntos',
-            {
-                fontSize: '32px',
-                color: currentPalette.white.hex,
-                align: 'center'
+        this.winPontsBtn = LabelComponent({
+            position: LabelComponentPositions.CENTETR_RIGHT,
+            text: 'Ganar Puntos',
+            fontSizePx: 24,
+            context: this,
+            onClick: (button: Phaser.GameObjects.Text) => {
+                this.winPoints(button)
             }
-        ).setInteractive()
-        // endregion
-
-        // region Adding interactivity
-        this.winPoints(getPoints)
-        this.deadByBtn(vidasTxt)
+        })
         // endregion
     }
 
