@@ -48,14 +48,13 @@ export default class Nivel1 extends Phaser.Scene {
             onClick: (button: Phaser.GameObjects.Text) => {
                 this.cambiarEscena(button, SceneName.MENU)
             },
-            fontSizePx: 32,
             color: currentPalette.secondary.hex,
             context: this
         })
 
         this.deadBtn = LabelComponent({
             position: LabelComponentPositions.CENTER_LEFT,
-            text: 'Morir',
+            text: 'MORIR',
             fontSizePx: 24,
             context: this,
             onClick: (button: Phaser.GameObjects.Text) => {
@@ -65,8 +64,8 @@ export default class Nivel1 extends Phaser.Scene {
 
         this.winPontsBtn = LabelComponent({
             position: LabelComponentPositions.CENTETR_RIGHT,
-            text: 'Ganar Puntos',
-            fontSizePx: 24,
+            text: 'GANAR',
+            fontSizePx: 16,
             context: this,
             onClick: (button: Phaser.GameObjects.Text) => {
                 this.winPoints(button)
@@ -83,7 +82,7 @@ export default class Nivel1 extends Phaser.Scene {
             console.log(`Score: ${this.score}`)
             if (this.score === 1) {
                 this.txtExit.update({
-                    text: 'SALIR..7',
+                    text: 'EXIT',
                     position: LabelComponentPositions.BOTTOM_RIGHT,
                     color: currentPalette.black
                 } as unknown as LabelComponentProps)

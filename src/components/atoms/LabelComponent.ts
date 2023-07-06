@@ -14,7 +14,7 @@ export enum LabelComponentPositions {
 }
 
 export interface LabelComponentProps {
-    fontSizePx: number,
+    fontSizePx?: number,
     text: string,
     x?: number,
     y?: number,
@@ -31,6 +31,9 @@ export interface LabelComponentActions {
 
 export const LabelComponent = (props: LabelComponentProps): LabelComponentActions => {
 
+    if(!props.fontSizePx) {
+        props.fontSizePx = 16
+    }
     // region Global Context
     const width = props.context.cameras.main.width
     const height = props.context.cameras.main.height
@@ -46,6 +49,12 @@ export const LabelComponent = (props: LabelComponentProps): LabelComponentAction
 
     // region Methods
     const calculatePosition = (propsRef: LabelComponentProps): LabelPosition => {
+        const padding = {
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: 5
+        }
         const textWidth = propsRef.text.length * propsRef.fontSizePx
         if (propsRef.position === null || propsRef.position === undefined) {
             return {
@@ -59,29 +68,29 @@ export const LabelComponent = (props: LabelComponentProps): LabelComponentAction
         }
         switch (propsRef.position) {
             case LabelComponentPositions.TOP_LEFT:
-                result.x = 10
-                result.y = propsRef.fontSizePx + 5
+                result.x = padding.left
+                result.y = propsRef.fontSizePx + padding.top
                 break
             case LabelComponentPositions.TOP_RIGHT:
-                result.x = width - (textWidth + 10)
-                result.y = propsRef.fontSizePx + 5
+                result.x = width - (textWidth + padding.right)
+                result.y = propsRef.fontSizePx + padding.top
                 break
             case LabelComponentPositions.TOP_CENTER:
                 result.x = (width / 2) - Math.round(textWidth / 2)
-                result.y = propsRef.fontSizePx + 5
+                result.y = propsRef.fontSizePx + padding.top
                 break
 
             case LabelComponentPositions.BOTTOM_LEFT:
-                result.x = 10
-                result.y = height - (propsRef.fontSizePx + 5)
+                result.x = padding.left
+                result.y = height - (propsRef.fontSizePx + padding.bottom)
                 break
             case LabelComponentPositions.BOTTOM_RIGHT:
-                result.x = width - (textWidth + 10)
-                result.y = height - (propsRef.fontSizePx + 5)
+                result.x = width - (textWidth + padding.right)
+                result.y = height - (propsRef.fontSizePx + padding.bottom)
                 break
             case LabelComponentPositions.BOTTOM_CENTER:
                 result.x = (width / 2) - Math.round(textWidth / 2)
-                result.y = height - (props.fontSizePx + 5)
+                result.y = height - (props.fontSizePx + padding.bottom)
                 break
 
             case LabelComponentPositions.CENTER:
@@ -89,11 +98,11 @@ export const LabelComponent = (props: LabelComponentProps): LabelComponentAction
                 result.y = height / 2
                 break
             case LabelComponentPositions.CENTER_LEFT:
-                result.x = 10
+                result.x = padding.left
                 result.y = height / 2
                 break
             case LabelComponentPositions.CENTETR_RIGHT:
-                result.x = width - (textWidth + 10)
+                result.x = width - (textWidth + padding.right)
                 result.y = height / 2
                 break
         }
